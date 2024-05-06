@@ -1,4 +1,6 @@
-<html lang="en" data-lt-installed="true"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hexagon Radio Player</title>
@@ -37,24 +39,16 @@
     }
 
     .hexagon-xat {
-          position: absolute;
-    left: 10px;
-    top: 25%;
-    transform: translateY(-50%);
-    width: 250px;
-    height: 250px;
-    background-image: url("https://xatimg.com/image/OFpwnbqu27iF.png");
-    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-    z-index: 1;
-    }
-
-    .hexagon-xat img {
-      width: 80px;
-      height: auto;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      left: 10px;
+      top: 25%;
+      transform: translateY(-50%);
+      width: 250px;
+      height: 250px;
+      background-image: url("https://xatimg.com/image/OFpwnbqu27iF.png");
+      background-size: cover; /* Adăugăm această linie */
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+      z-index: 1;
     }
 
     .hexagon-xat .xat-name {
@@ -102,7 +96,6 @@
 <body>
   <div class="hexagon-container">
     <div class="hexagon-xat">
-      
       <div class="xat-name">xat Valhalla</div>
     </div>
     <div class="hexagon-radio">
@@ -156,6 +149,5 @@
       });
     });
   </script>
-
-
-</body></html>
+</body>
+</html>
