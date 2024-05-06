@@ -25,7 +25,7 @@
     .hexagon-radio {
       width: 100%;
       height: 100%;
-      background-image: url("https://xatimg.com/image/do5fQpC1LZmk.png);
+      background-image: url("https://xatimg.com/image/22YlVQJsaEgC.jpg");
       background-size: cover;
       background-position: center;
       position: absolute;
@@ -39,9 +39,9 @@
 
     .controls {
       position: absolute;
-      top: 50%;
+      bottom: 20px;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       color: #e35515;
       text-align: center;
     }
@@ -74,6 +74,10 @@
     }
 
     .title {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 24px;
       color: #e35515;
     }
@@ -83,7 +87,7 @@
   <div class="hexagon-container">
     <div class="hexagon-radio">
       <div class="controls">
-        <div class="title">xat.com/valhalla</div>
+        <div class="title">NUME RADIO</div>
         <div class="listeners">Listeners: <span id="listeners-count">0</span></div>
         <div class="current-date">Current Date: <span id="current-date"></span></div>
         <button class="play-btn"></button>
