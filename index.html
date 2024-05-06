@@ -1,4 +1,6 @@
-<html lang="en" data-lt-installed="true"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hexagon Radio Player</title>
@@ -33,6 +35,35 @@
 
     .hexagon-container:hover .hexagon-radio {
       transform: scale(1.05);
+    }
+
+    .hexagon-xat {
+      position: absolute;
+      left: -180px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 150px;
+      height: 150px;
+      background-color: #e35515;
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    }
+
+    .hexagon-xat img {
+      width: 80px;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hexagon-xat .xat-name {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 14px;
     }
 
     .controls {
@@ -90,11 +121,15 @@
 </head>
 <body>
   <div class="hexagon-container">
+    <div class="hexagon-xat">
+      <img src="https://via.placeholder.com/80" alt="Nume Xat">
+      <div class="xat-name">Nume Xat</div>
+    </div>
     <div class="hexagon-radio">
       <div class="controls">
-        
-        
-        
+        <div class="title">NUME RADIO</div>
+        <div class="listeners">Listeners: <span id="listeners-count">0</span></div>
+        <div class="current-date">Current Date: <span id="current-date"></span></div>
         <button class="play-btn"></button>
         <button class="volume-btn"></button>
         <input type="range" class="volume-slider" min="0" max="100" value="50">
@@ -168,6 +203,5 @@
       setInterval(updateCurrentDate, 1000);
     });
   </script>
-
-
-</body></html>
+</body>
+</html>
