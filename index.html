@@ -99,6 +99,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
+      const audio = new Audio("https://boxstream.danceradiouk.com/stream/1/");
       const playBtn = document.querySelector(".play-btn");
       const volumeBtn = document.querySelector(".volume-btn");
       const volumeSlider = document.querySelector(".volume-slider");
@@ -114,10 +115,10 @@
         isPlaying = !isPlaying;
         if (isPlaying) {
           playBtn.style.backgroundImage = "url('https://img.icons8.com/material-sharp/24/000000/pause--v1.png')";
-          // Start playing stream
+          audio.play();
         } else {
           playBtn.style.backgroundImage = "url('https://img.icons8.com/material-sharp/24/000000/play--v1.png')";
-          // Pause stream
+          audio.pause();
         }
       });
 
@@ -126,10 +127,10 @@
         isMuted = !isMuted;
         if (isMuted) {
           volumeBtn.style.backgroundImage = "url('https://img.icons8.com/material-sharp/24/000000/mute.png')";
-          // Mute stream
+          audio.muted = true;
         } else {
           volumeBtn.style.backgroundImage = "url('https://img.icons8.com/material-sharp/24/000000/speaker.png')";
-          // Unmute stream
+          audio.muted = false;
         }
       });
 
@@ -137,7 +138,7 @@
       volumeSlider.addEventListener("input", function() {
         // Update volume based on slider value
         const volumeValue = volumeSlider.value;
-        // Update stream volume
+        audio.volume = volumeValue / 100;
       });
 
       // Function to update listeners count
