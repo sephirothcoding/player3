@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Radio Player</title>
+  <title>Hexagon Radio Player</title>
   <style>
     body {
       display: flex;
@@ -11,202 +11,139 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-color: #f4f4f4;
-      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
     }
 
-    .container {
-      width: 320px;
-      height: 320px;
+    .hexagon-container {
+      width: 500px;
+      height: 500px;
       position: relative;
       overflow: hidden;
-      transform: rotate(30deg);
     }
 
-    .hexagon {
+    .hexagon-radio {
+      width: 100%;
+      height: 100%;
+      background-image: url("https://xatimg.com/image/22YlVQJsaEgC.jpg");
+      background-size: cover;
+      background-position: center;
       position: absolute;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      transition: transform 0.3s ease;
     }
 
-    .hexagon img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      /* Update the background image */
-      background-image: url('https://xatimg.com/image/e6ksszvofxSp.jpg');
-      filter: grayscale(30%) brightness(70%);
+    .hexagon-container:hover .hexagon-radio {
+      transform: translate(-10px, -10px);
     }
 
     .controls {
       position: absolute;
       bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) rotate(-30deg);
-      display: flex;
-      align-items: center;
+      left: 20px;
+      color: white;
+      font-family: Arial, sans-serif;
     }
 
-    button {
-      background-color: #ff5e3a;
+    .play-btn, .volume-btn {
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.5);
       border: none;
+      margin-right: 10px;
       cursor: pointer;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      font-size: 24px;
-      color: #fff;
-      margin: 0 10px;
-      transition: background-color 0.3s ease;
+      background-size: 100% 100%;
     }
 
-    button:hover {
-      background-color: #ff785b;
+    .volume-btn {
+      background-image: url("https://img.icons8.com/material-sharp/24/000000/speaker.png");
     }
 
-    input[type="range"] {
-      width: 100px;
-      height: 5px;
-      margin: 0 10px;
-      background-color: #ddd;
-      border-radius: 5px;
-      -webkit-appearance: none;
+    .play-btn {
+      background-image: url("https://img.icons8.com/material-sharp/24/000000/play--v1.png");
     }
 
-    input[type="range"]:focus {
-      outline: none;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 15px;
-      height: 15px;
-      background-color: #ff5e3a;
-      border-radius: 50%;
-      cursor: pointer;
-      margin-top: -5px;
-    }
-
-    .radio-info {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-30deg);
-      text-align: center;
-      color: #333;
-    }
-
-    .radio-info h1 {
-      margin-bottom: 10px;
-      font-size: 24px;
-    }
-
-    .listener-count {
-      font-size: 18px;
-    }
-
-    .current-time {
-      font-size: 14px;
-      margin-top: 5px;
-    }
-
-    .beat-music {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background-color: rgba(255, 94, 58, 0.8);
-      border-radius: 50%;
-      animation: beat 1s infinite alternate;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-    }
-
-    @keyframes beat {
-      from {
-        transform: scale(1);
-      }
-      to {
-        transform: scale(1.1);
-      }
+    .listeners, .current-date {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="hexagon" onmouseenter="hexagonHover(true)" onmouseleave="hexagonHover(false)">
-      <img src="https://xatimg.com/image/e6ksszvofxSp.jpg" alt="Background Image">
-      <audio id="audio" src="https://boxstream.danceradiouk.com/stream/1/" type="audio/mpeg"></audio>
+  <div class="hexagon-container">
+    <div class="hexagon-radio">
       <div class="controls">
-        <button id="playpause" class="play" onclick="togglePlayPause()">▶</button>
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" oninput="setVolume()">
+        <button class="play-btn"></button>
+        <button class="volume-btn"></button>
+        <input type="range" class="volume-slider" min="0" max="100" value="50">
+        <div class="listeners">Listeners: <span id="listeners-count">0</span></div>
+        <div class="current-date">Current Date: <span id="current-date"></span></div>
       </div>
-      <div class="beat-music"></div>
-    </div>
-    <div class="radio-info">
-      <h1>Modern Radio Player</h1>
-      <p class="listener-count">Current Listeners: <span id="listener-count">0</span></p>
-      <p class="current-time" id="current-time">00:00</p>
     </div>
   </div>
 
   <script>
-    const audio = document.getElementById('audio');
-    const playpause = document.getElementById('playpause');
-    const volume = document.getElementById('volume');
-    const listenerCount = document.getElementById('listener-count');
-    const currentTime = document.getElementById('current-time');
+    document.addEventListener("DOMContentLoaded", function() {
+      const playBtn = document.querySelector(".play-btn");
+      const volumeBtn = document.querySelector(".volume-btn");
+      const volumeSlider = document.querySelector(".volume-slider");
+      const listenersCount = document.getElementById("listeners-count");
+      const currentDate = document.getElementById("current-date");
 
-    let isPlaying = false;
+      let isPlaying = false;
+      let isMuted = false;
+      let listeners = 0;
 
-    function togglePlayPause() {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
+      // Function to toggle play/pause
+      playBtn.addEventListener("click", function() {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+          playBtn.style.backgroundImage = "url('https://img.icons8.com/material-sharp/24/000000/pause--v1.png')";
+          // Start playing stream
+        } else {
+          playBtn.style.backgroundImage = "url('https://img.icons8.com/material-sharp/24/000000/play--v1.png')";
+          // Pause stream
+        }
+      });
+
+      // Function to toggle mute/unmute
+      volumeBtn.addEventListener("click", function() {
+        isMuted = !isMuted;
+        if (isMuted) {
+          volumeBtn.style.backgroundImage = "url('https://img.icons8.com/material-sharp/24/000000/mute.png')";
+          // Mute stream
+        } else {
+          volumeBtn.style.backgroundImage = "url('https://img.icons8.com/material-sharp/24/000000/speaker.png')";
+          // Unmute stream
+        }
+      });
+
+      // Function to update volume
+      volumeSlider.addEventListener("input", function() {
+        // Update volume based on slider value
+        const volumeValue = volumeSlider.value;
+        // Update stream volume
+      });
+
+      // Function to update listeners count
+      function updateListenersCount() {
+        // Fetch listeners count from server or API
+        // For now, let's just simulate a random number
+        listeners = Math.floor(Math.random() * 1000);
+        listenersCount.textContent = listeners;
       }
-      isPlaying = !isPlaying;
-      updatePlayPauseButton();
-    }
 
-    function updatePlayPauseButton() {
-      if (isPlaying) {
-        playpause.textContent = '⏸';
-      } else {
-        playpause.textContent = '▶';
+      // Update listeners count every 10 seconds
+      setInterval(updateListenersCount, 10000);
+
+      // Function to update current date
+      function updateCurrentDate() {
+        const now = new Date();
+        currentDate.textContent = now.toDateString();
       }
-    }
 
-    function setVolume() {
-      audio.volume = volume.value;
-    }
-
-    function updateTime() {
-      const minutes = Math.floor(audio.currentTime / 60);
-      const seconds = Math.floor(audio.currentTime % 60);
-      currentTime.textContent = `${pad(minutes)}:${pad(seconds)}`;
-    }
-
-    function pad(number) {
-      return (number < 10) ? '0' + number : number;
-    }
-
-    // Function to count listeners can be implemented using data from the streaming server
-
-    // Function for hover animation
-    function hexagonHover(shouldScale) {
-      const hexagon = document.querySelector('.hexagon');
-      if (shouldScale) {
-        hexagon.style.transform = 'scale(1.1)';
-      } else {
-        hexagon.style.transform = 'scale(1)';
-      }
-    }
-
-    audio.addEventListener('timeupdate', updateTime);
+      // Update current date initially and then every second
+      updateCurrentDate();
+      setInterval(updateCurrentDate, 1000);
+    });
   </script>
 </body>
 </html>
