@@ -12,6 +12,7 @@
       height: 100vh;
       margin: 0;
       background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
     }
 
     .hexagon-container {
@@ -24,7 +25,7 @@
     .hexagon-radio {
       width: 100%;
       height: 100%;
-      background-image: url("https://xatimg.com/image/22YlVQJsaEgC.jpg");
+      background-image: url("https://xatimg.com/image/cLOCTQzlEbvB.jpg");
       background-size: cover;
       background-position: center;
       position: absolute;
@@ -33,15 +34,15 @@
     }
 
     .hexagon-container:hover .hexagon-radio {
-      transform: translate(-10px, -10px);
+      transform: scale(1.05);
     }
 
     .controls {
       position: absolute;
       bottom: 20px;
       left: 20px;
-      color: white;
-      font-family: Arial, sans-serif;
+      color: #e35515;
+      text-align: center;
     }
 
     .play-btn, .volume-btn {
@@ -52,6 +53,11 @@
       margin-right: 10px;
       cursor: pointer;
       background-size: 100% 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .play-btn:hover, .volume-btn:hover {
+      transform: scale(1.1);
     }
 
     .volume-btn {
@@ -63,19 +69,29 @@
     }
 
     .listeners, .current-date {
-      margin-top: 10px;
+      margin-top: 20px;
+    }
+
+    .title {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      color: #e35515;
     }
   </style>
 </head>
 <body>
   <div class="hexagon-container">
+    <div class="title">NUME RADIO</div>
     <div class="hexagon-radio">
       <div class="controls">
+        <div class="listeners">Listeners: <span id="listeners-count">0</span></div>
+        <div class="current-date">Current Date: <span id="current-date"></span></div>
         <button class="play-btn"></button>
         <button class="volume-btn"></button>
         <input type="range" class="volume-slider" min="0" max="100" value="50">
-        <div class="listeners">Listeners: <span id="listeners-count">0</span></div>
-        <div class="current-date">Current Date: <span id="current-date"></span></div>
       </div>
     </div>
   </div>
