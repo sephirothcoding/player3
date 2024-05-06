@@ -46,6 +46,7 @@
       height: 150px;
       background-color: #e35515;
       clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+      z-index: 1;
     }
 
     .hexagon-xat img {
@@ -97,26 +98,6 @@
     .play-btn {
       background-image: url("https://img.icons8.com/material-sharp/24/000000/play--v1.png");
     }
-
-    .listeners, .current-date {
-      margin-top: 20px;
-    }
-
-    .title {
-      position: absolute;
-      top: 5%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 24px;
-      color: #e35515;
-    }
-
-    .listeners, .current-date {
-      position: absolute;
-      top: 15%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
   </style>
 </head>
 <body>
@@ -127,9 +108,6 @@
     </div>
     <div class="hexagon-radio">
       <div class="controls">
-        <div class="title">NUME RADIO</div>
-        <div class="listeners">Listeners: <span id="listeners-count">0</span></div>
-        <div class="current-date">Current Date: <span id="current-date"></span></div>
         <button class="play-btn"></button>
         <button class="volume-btn"></button>
         <input type="range" class="volume-slider" min="0" max="100" value="50">
@@ -143,12 +121,9 @@
       const playBtn = document.querySelector(".play-btn");
       const volumeBtn = document.querySelector(".volume-btn");
       const volumeSlider = document.querySelector(".volume-slider");
-      const listenersCount = document.getElementById("listeners-count");
-      const currentDate = document.getElementById("current-date");
 
       let isPlaying = false;
       let isMuted = false;
-      let listeners = 0;
 
       // Function to toggle play/pause
       playBtn.addEventListener("click", function() {
@@ -180,27 +155,6 @@
         const volumeValue = volumeSlider.value;
         audio.volume = volumeValue / 100;
       });
-
-      // Function to update listeners count
-      function updateListenersCount() {
-        // Fetch listeners count from server or API
-        // For now, let's just simulate a random number
-        listeners = Math.floor(Math.random() * 1000);
-        listenersCount.textContent = listeners;
-      }
-
-      // Update listeners count every 10 seconds
-      setInterval(updateListenersCount, 10000);
-
-      // Function to update current date
-      function updateCurrentDate() {
-        const now = new Date();
-        currentDate.textContent = now.toDateString();
-      }
-
-      // Update current date initially and then every second
-      updateCurrentDate();
-      setInterval(updateCurrentDate, 1000);
     });
   </script>
 </body>
