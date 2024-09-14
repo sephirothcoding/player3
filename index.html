@@ -9,10 +9,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 800px;
-      weight: 800px;
+      height: 100vh;
       margin: 0;
-      background-color: #f2f2f2;
+      background: url('https://xatimg.com/image/V3Rxr66n8slA.png') no-repeat center center fixed;
+      background-size: cover;
       font-family: Arial, sans-serif;
     }
 
@@ -21,81 +21,47 @@
       height: 500px;
       position: relative;
       overflow: hidden;
+      animation: fadeIn 2s ease-in-out;
     }
 
     .hexagon-radio {
       width: 100%;
       height: 100%;
-      background-image: url("https://xatimg.com/image/Z7vimGTE9yus.png");
-      background-size: cover;
-      background-position: center;
+      background-color: rgba(255, 255, 255, 0.8);
       position: absolute;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
     .hexagon-container:hover .hexagon-radio {
       transform: scale(1.05);
-    }
-
-    .hexagon-xat {
-      position: absolute;
-      left: 10px;
-      top: 25%;
-      transform: translateY(-50%);
-      width: 250px;
-      height: 250px;
-      background-image: url("https://xatimg.com/image/jakfpb45ipjm.png");
-      background-size: cover;
-      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-      z-index: 1;
-      transition: transform 0.3s ease; /* Adăugăm animația */
-    }
-
-    .hexagon-xat:hover {
-      transform: scale(1.05);
-    }
-
-    .hexagon-xat img {
-      width: 80px;
-      height: auto;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .hexagon-xat .xat-name {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      font-size: 14px;
+      background-color: rgba(255, 255, 255, 1);
     }
 
     .controls {
       position: absolute;
-      bottom: 50px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       color: #e35515;
       text-align: center;
+      z-index: 2;
     }
 
     .play-btn, .volume-btn {
       width: 40px;
       height: 40px;
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(255, 255, 255, 0.8);
       border: none;
       margin-right: 10px;
       cursor: pointer;
       background-size: 100% 100%;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
     .play-btn:hover, .volume-btn:hover {
       transform: scale(1.1);
+      background-color: rgba(255, 255, 255, 1);
     }
 
     .volume-btn {
@@ -105,13 +71,24 @@
     .play-btn {
       background-image: url("https://img.icons8.com/material-sharp/24/000000/play--v1.png");
     }
+
+    .volume-slider {
+      width: 100px;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="hexagon-container">
-    <div class="hexagon-xat">
-      <div class="xat-name">xat Valhalla</div>
-    </div>
     <div class="hexagon-radio">
       <div class="controls">
         <button class="play-btn"></button>
@@ -119,7 +96,7 @@
         <input type="range" class="volume-slider" min="0" max="100" value="50">
       </div>
     </div>
-  <div id="extwaiokist" style="display:none" v="fljme" q="5c78d3e8" c="638.1" i="644" u="17.30" s="04272401" sg="svr_09102316-ga_04272401-bai_04252415" d="0" w="false" e="}" a="2" m="BMe="><div id="extwaigglbit" style="display:none" v="fljme" q="5c78d3e8" c="638.1" i="644" u="17.30" s="04272401" sg="svr_09102316-ga_04272401-bai_04252415" d="0" w="false" e="}" a="2" m="BMe="></div></div></div>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -157,7 +134,6 @@
 
       // Function to update volume
       volumeSlider.addEventListener("input", function() {
-        // Update volume based on slider value
         const volumeValue = volumeSlider.value;
         audio.volume = volumeValue / 100;
       });
